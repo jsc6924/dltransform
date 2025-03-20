@@ -21,9 +21,19 @@ public:
         return selectedDir;
     }
 
+    void selectInputEncoding(int index);
+    void selectInputFile(int index);
+    void updatePreview();
+    void testStreamOutput();
+    void detectFormat();
+
+
 private:
     Ui::InputSourceDialog *ui;
     QString selectedDir;
+    QString selectedFile;
+    QString selectedEncoding;
+    bool previewIsValid;
 };
 
 #endif // INPUTSOURCEDIALOG_H

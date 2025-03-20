@@ -10,6 +10,8 @@ app::app(QWidget *parent)
     connect(ui->inputSourceButton, &QPushButton::clicked, this, &app::openInputSourceDialog);
 }
 
+
+
 app::~app()
 {
     delete ui;
