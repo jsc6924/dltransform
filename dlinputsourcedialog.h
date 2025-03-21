@@ -1,19 +1,19 @@
-#ifndef INPUTSOURCEDIALOG_H
-#define INPUTSOURCEDIALOG_H
+#ifndef DLINPUTSOURCEDIALOG_H
+#define DLINPUTSOURCEDIALOG_H
 
 #include <QDialog>
 
 namespace Ui {
-class InputSourceDialog;
+class DoubleLineInputSourceDialog;
 }
 
-class InputSourceDialog : public QDialog
+class DoubleLineInputSourceDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit InputSourceDialog(QWidget *parent = nullptr);
-    ~InputSourceDialog();
+    explicit DoubleLineInputSourceDialog(QWidget *parent = nullptr);
+    ~DoubleLineInputSourceDialog();
 
     void selectInputSource();
     QString getSelectedDir()
@@ -29,11 +29,11 @@ public:
 
 
 private:
-    Ui::InputSourceDialog *ui;
+    Ui::DoubleLineInputSourceDialog *ui;
     QString selectedDir;
     QString selectedFile;
     QString selectedEncoding;
     bool previewIsValid;
 };
 
-#endif // INPUTSOURCEDIALOG_H
+#endif // DLINPUTSOURCEDIALOG_H

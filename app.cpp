@@ -1,6 +1,6 @@
 #include "app.h"
 #include "./ui_app.h"
-#include "inputsourcedialog.h"
+#include "dlinputsourcedialog.h"
 
 app::app(QWidget *parent)
     : QMainWindow(parent)
@@ -19,6 +19,6 @@ app::~app()
 
 void app::openInputSourceDialog()
 {
-    InputSourceDialog d;
+    DoubleLineInputSourceDialog d;
     d.exec();
 }

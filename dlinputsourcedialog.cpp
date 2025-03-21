@@ -1,5 +1,5 @@
-#include "inputsourcedialog.h"
-#include "ui_inputsourcedialog.h"
+#include "dlinputsourcedialog.h"
+#include "ui_dlinputsourcedialog.h"
 #include <QFileDialog>
 #include <QTextStream>
 #include <QStringConverter>
@@ -14,9 +14,9 @@ QString regexSubtract(const QString& reg,
 bool matchAnyPrefix(const QString &pattern, const QStringList &lines);
 bool matchAllPrefix(const QString &pattern, const QStringList &lines);
 
-InputSourceDialog::InputSourceDialog(QWidget *parent)
+DoubleLineInputSourceDialog::DoubleLineInputSourceDialog(QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::InputSourceDialog)
+    , ui(new Ui::DoubleLineInputSourceDialog)
     , previewIsValid(false)
 
 {
@@ -26,24 +26,24 @@ InputSourceDialog::InputSourceDialog(QWidget *parent)
         encodingList.append(e);
     }
     ui->previewEncodingComboBox->addItems(encodingList);
-    connect(ui->previewEncodingComboBox, &QComboBox::currentIndexChanged, this, &InputSourceDialog::selectInputEncoding);
-    connect(ui->previewFileComboBox, &QComboBox::currentIndexChanged, this, &InputSourceDialog::selectInputFile);
+    connect(ui->previewEncodingComboBox, &QComboBox::currentIndexChanged, this, &DoubleLineInputSourceDialog::selectInputEncoding);
+    connect(ui->previewFileComboBox, &QComboBox::currentIndexChanged, this, &DoubleLineInputSourceDialog::selectInputFile);
 
 
     selectedEncoding = encoding::supportedEncodings[0];
-    connect(ui->inputSelectButton, &QPushButton::clicked, this, &InputSourceDialog::selectInputSource);
+    connect(ui->inputSelectButton, &QPushButton::clicked, this, &DoubleLineInputSourceDialog::selectInputSource);
 
-    connect(ui->detectFormatButton, &QPushButton::clicked, this, &InputSourceDialog::detectFormat);
-    connect(ui->testStreamButton, &QPushButton::clicked, this, &InputSourceDialog::testStreamOutput);
+    connect(ui->detectFormatButton, &QPushButton::clicked, this, &DoubleLineInputSourceDialog::detectFormat);
+    connect(ui->testStreamButton, &QPushButton::clicked, this, &DoubleLineInputSourceDialog::testStreamOutput);
 
 }
 
-InputSourceDialog::~InputSourceDialog()
+DoubleLineInputSourceDialog::~DoubleLineInputSourceDialog()
 {
     delete ui;
 }
 
-void InputSourceDialog::selectInputSource()
+void DoubleLineInputSourceDialog::selectInputSource()
 {
     QString dir = QFileDialog::getExistingDirectory(
         this,
@@ -72,19 +72,19 @@ void InputSourceDialog::selectInputSource()
     }
 }
 
-void InputSourceDialog::selectInputEncoding(int index)
+void DoubleLineInputSourceDialog::selectInputEncoding(int index)
 {
     selectedEncoding = ui->previewEncodingComboBox->itemText(index);
     updatePreview();
 }
 
-void InputSourceDialog::selectInputFile(int index)
+void DoubleLineInputSourceDialog::selectInputFile(int index)
 {
     selectedFile = ui->previewFileComboBox->itemText(index);
     updatePreview();
 }
 
-void InputSourceDialog::updatePreview()
+void DoubleLineInputSourceDialog::updatePreview()
 {
     previewIsValid = false;
     if (selectedFile.isEmpty()) {
@@ -110,7 +110,7 @@ void InputSourceDialog::updatePreview()
 
 
 
-void InputSourceDialog::testStreamOutput()
+void DoubleLineInputSourceDialog::testStreamOutput()
 {
     if (!previewIsValid) {
         return;
@@ -166,7 +166,7 @@ void InputSourceDialog::testStreamOutput()
     ui->streamOutputEdit->setText(streamPreview);
 }
 
-void InputSourceDialog::detectFormat()
+void DoubleLineInputSourceDialog::detectFormat()
 {
     if (!previewIsValid) {
         return;

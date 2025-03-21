@@ -31,7 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(dltransform
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        inputsourcedialog.h inputsourcedialog.cpp inputsourcedialog.ui
+        dlinputsourcedialog.h dlinputsourcedialog.cpp dlinputsourcedialog.ui
         utils.h utils.cpp
         encoding.h encoding.cpp
     )
