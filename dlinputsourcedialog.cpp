@@ -6,6 +6,7 @@
 #include <QRegularExpression>
 #include "utils.h"
 #include "encoding.h"
+#include "inputsource.h"
 
 bool containsJapaneseCharacters(const QString &str);
 QString generateRegex(const QStringList &lines);
@@ -18,7 +19,7 @@ DoubleLineInputSourceDialog::DoubleLineInputSourceDialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::DoubleLineInputSourceDialog)
     , previewIsValid(false)
-
+    , streamOutputIsValid(false)
 {
     ui->setupUi(this);
     QStringList encodingList;
@@ -36,6 +37,8 @@ DoubleLineInputSourceDialog::DoubleLineInputSourceDialog(QWidget *parent)
     connect(ui->detectFormatButton, &QPushButton::clicked, this, &DoubleLineInputSourceDialog::detectFormat);
     connect(ui->testStreamButton, &QPushButton::clicked, this, &DoubleLineInputSourceDialog::testStreamOutput);
 
+    connect(ui->cancelButton, &QPushButton::clicked, this, &DoubleLineInputSourceDialog::reject);
+    connect(ui->confirmButton, &QPushButton::clicked, this, &DoubleLineInputSourceDialog::accept);
 }
 
 DoubleLineInputSourceDialog::~DoubleLineInputSourceDialog()
@@ -112,6 +115,7 @@ void DoubleLineInputSourceDialog::updatePreview()
 
 void DoubleLineInputSourceDialog::testStreamOutput()
 {
+    ui->confirmButton->setEnabled(streamOutputIsValid = false);
     if (!previewIsValid) {
         return;
     }
@@ -164,6 +168,10 @@ void DoubleLineInputSourceDialog::testStreamOutput()
         streamPreview.append("\n");
     }
     ui->streamOutputEdit->setText(streamPreview);
+    selectedJreg = originalRegexStr;
+    selectedCreg = translationRegexStr;
+    selectedIgnoreReg = commentRegexStr;
+    ui->confirmButton->setEnabled(streamOutputIsValid = true);
 }
 
 void DoubleLineInputSourceDialog::detectFormat()
@@ -229,6 +237,14 @@ void DoubleLineInputSourceDialog::detectFormat()
     ui->originalRegexEdit->setText(rRegStr);
     ui->translationRegexEdit->setText(tRegStr);
     testStreamOutput();
+}
+
+ std::optional<std::shared_ptr<InputSource>> DoubleLineInputSourceDialog::getInputSource() const
+{
+    if (!streamOutputIsValid) {
+        return std::nullopt;
+    }
+    return std::make_shared<DoubleLineInputSource>(selectedDir, selectedEncoding, selectedJreg, selectedCreg, selectedIgnoreReg);
 }
 
 bool containsJapaneseCharacters(const QString &str) {

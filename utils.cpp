@@ -3,11 +3,15 @@
 #include <QDir>
 #include <QFileInfoList>
 #include <QDebug>
+#include <QDir>
 
 
 utils::utils() {}
 
-vector<QString> utils::loadFilesFromDirectory(const QString &dirPath, bool recursively = false)
+vector<QString> utils::loadFilesFromDirectory(const QString &dirPath, bool recursively = false) {
+    return utils::loadFilesFromDirectory(QDir(dirPath), recursively);
+}
+vector<QString> utils::loadFilesFromDirectory(const QDir &dirPath, bool recursively = false)
 {
     QDir directory(dirPath);
 

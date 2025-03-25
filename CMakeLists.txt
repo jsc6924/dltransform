@@ -34,6 +34,15 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         dlinputsourcedialog.h dlinputsourcedialog.cpp dlinputsourcedialog.ui
         utils.h utils.cpp
         encoding.h encoding.cpp
+        inputsource.h inputsource.cpp
+        data.h data.cpp
+        inputsource.cpp inputsource.h
+        inputsource.h
+        outputsink.h outputsink.cpp
+        outputsink.cpp outputsink.h
+        streamencoder.h streamencoder.cpp
+        formatter.h
+        formatter.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET dltransform APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

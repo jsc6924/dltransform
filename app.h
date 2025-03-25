@@ -2,6 +2,10 @@
 #define APP_H
 
 #include <QMainWindow>
+#include "inputsource.h"
+#include "formatter.h"
+#include "data.h"
+#include "outputsink.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,8 +22,13 @@ public:
     ~app();
 
     void openInputSourceDialog();
+    void run();
 
 private:
     Ui::app *ui;
+
+    std::shared_ptr<InputSource> selectedInput;
+    std::shared_ptr<Formatter> selecedFormatter;
+    std::shared_ptr<OutputSink> selectedOutput;
 };
 #endif // APP_H

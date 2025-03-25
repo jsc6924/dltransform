@@ -2,6 +2,8 @@
 #define DLINPUTSOURCEDIALOG_H
 
 #include <QDialog>
+#include "inputsource.h"
+#include <optional>
 
 namespace Ui {
 class DoubleLineInputSourceDialog;
@@ -26,6 +28,7 @@ public:
     void updatePreview();
     void testStreamOutput();
     void detectFormat();
+    std::optional<std::shared_ptr<InputSource>> getInputSource() const;
 
 
 private:
@@ -33,7 +36,9 @@ private:
     QString selectedDir;
     QString selectedFile;
     QString selectedEncoding;
+    QString selectedJreg, selectedCreg, selectedIgnoreReg;
     bool previewIsValid;
+    bool streamOutputIsValid;
 };
 
 #endif // DLINPUTSOURCEDIALOG_H
