@@ -9,9 +9,13 @@ public:
 };
 
 
-class DefaultFormatter : public Formatter {
+class DoubleLineFormatter : public Formatter {
 public:
+    DoubleLineFormatter();
     QString format(const Stream &s) const override;
+
+    QString jpLineFormat;
+    QString cnLineFormat;
 };
 
 #endif // FORMATTER_H

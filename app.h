@@ -22,13 +22,14 @@ public:
     ~app();
 
     void openInputSourceDialog();
+    void openFormatterDialog();
     void run();
 
 private:
     Ui::app *ui;
 
     std::shared_ptr<InputSource> selectedInput;
-    std::shared_ptr<Formatter> selecedFormatter;
+    std::shared_ptr<Formatter> selectedFormatter;
     std::shared_ptr<OutputSink> selectedOutput;
 };
 #endif // APP_H

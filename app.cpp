@@ -2,6 +2,7 @@
 #include "./ui_app.h"
 #include "dlinputsourcedialog.h"
 #include <QFileInfo>
+#include "doublelineformatterdialog.h"
 
 app::app(QWidget *parent)
     : QMainWindow(parent)
@@ -9,9 +10,10 @@ app::app(QWidget *parent)
 {
     ui->setupUi(this);
     connect(ui->inputSourceButton, &QPushButton::clicked, this, &app::openInputSourceDialog);
+    connect(ui->formatterButton, &QPushButton::clicked, this, &app::openFormatterDialog);
     connect(ui->runButton, &QPushButton::clicked, this, &app::run);
 
-    selecedFormatter = std::make_shared<DefaultFormatter>();
+    selectedFormatter = std::make_shared<DoubleLineFormatter>();
     selectedOutput = std::make_shared<DirectoryOutputSink>("test_output/");
 }
 
@@ -34,6 +36,16 @@ void app::openInputSourceDialog()
     }
 }
 
+
+void app::openFormatterDialog()
+{
+    DoubleLineFormatterDialog d;
+    if(d.exec()) {
+        selectedFormatter = d.getFormatter();
+    }
+}
+
+
 void app::run()
 {
     if (!selectedInput.get()) {
@@ -46,7 +58,7 @@ void app::run()
         ctx.filename = fileName;
 
         Stream stream = selectedInput.get()->stream(ctx);
-        QString outText = selecedFormatter.get()->format(stream);
+        QString outText = selectedFormatter.get()->format(stream);
         selectedOutput.get()->output(ctx, outText);
     });
 }
